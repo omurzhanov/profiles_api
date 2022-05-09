@@ -1,7 +1,7 @@
 from dataclasses import field
 from rest_framework import serializers
 
-from .models import User
+from .models import User, ProfileFeedItem
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,3 +33,10 @@ class UserSerializer(serializers.ModelSerializer):
             instance.set_password(password)
  
         return super().update(instance, validated_data)
+
+
+class ProfileFeedItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfileFeedItem
+        fields = ('id', 'user', 'status_text', 'created_on')
+        extra_kwargs = {'user': {'read_only': True}}
